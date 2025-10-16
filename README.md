@@ -9,8 +9,9 @@
 ## Project Overview
 This project uses the `Swing` and `AWT` libraries provided by Java.
 I have supplied the program with a color palette and a "bitmap" of sorts.
+
 The program draws this bitmap in several different forms.   
-First with squares, then with circles, then rotated, then scaled.
+First with squares, then with circles, then rotated, then scaled.[^NYI]
 
 This program uses no coordinates other than (0, 0).
 Instead, it only transforms the drawing context.
@@ -28,10 +29,12 @@ The process follows a certain flow:
 6. The canvas draws the next row.
 <br><br>
 7. Before drawing the next bitmap (circles, skewed, etc.),
-  the canvas translates to a new position in the window before applying a rotation and/or scaling transform if applicable.
+  the canvas translates to a new position in the window before applying a rotation and/or scaling transform if applicable.[^NYI]
 8. This new location/position/rotation/scale **<ins>becomes the base transform</ins>**
-  and is stored in the variable from step one.
-9. The process repeats itself until all "versions" of the "bitmap" are drawn.
+  and is stored in the variable from step one.[^NYI]
+9. The process repeats itself until all "versions" of the "bitmap" are drawn. [^NYI]
+
+[^NYI]: Not yet implemented.
 
 ## Quick Analysis of what I Learned
 As the project is not yet finished, I cannot yet provide this analysis. 
