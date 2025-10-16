@@ -15,7 +15,7 @@ This project uses the `Swing` and `AWT` libraries provided by Java.
 I have supplied the program with a color palette and a "bitmap" of sorts.
 
 The program draws this bitmap in several different forms.   
-First with squares, then with circles, then rotated, then scaled.[^NYI]
+First with squares, then with circles, then rotated, then scaled.
 
 This program uses no coordinates other than (0, 0).
 Instead, it only transforms the drawing context.
@@ -36,12 +36,10 @@ The process follows a certain flow:
    <br><br>
 7. Before drawing the next bitmap (circles, skewed, etc.),
    the canvas translates to a new position in the window before applying a rotation and/or scaling transform if
-   applicable.[^NYI]
+   applicable.
 8. This new location/position/rotation/scale **<ins>becomes the base transform</ins>**
-   and is stored in the variable from step one.[^NYI]
-9. The process repeats itself until all "versions" of the "bitmap" are drawn. [^NYI]
-
-[^NYI]: Not yet implemented.
+   and is stored in the variable from step one.
+9. The process repeats itself until all "versions" of the "bitmap" are drawn.
 
 ## Quick Analysis of what I Learned
 
@@ -49,15 +47,25 @@ As the project is not yet finished, I cannot yet provide this analysis.
 However, I _can_ provide a running list of things I have learned _so far_.
 
 - Positioning the Swing window to open in the center of the user's desktop.
-- How and when to appropriately store, mutate, and restore `AffineTransformation` to/from the canvas.
-    - How to precisely translate the canvas while iterating over the "bitmap".
+- How and when to appropriately store, mutate, and restore `AffineTransform` to/from the canvas.
+- How to precisely translate the canvas while iterating over the "bitmap".
+- How and when to rotate the canvas (in radians), and how said rotation affects translations done before and after.
+- How and when to scale the canvas, and how said scale affects translations done before and after.
+- How to make an identity `AffineTransform` to hard-reset the canvas's transform.
+  - Calling `g2.getTransform` at the very start of the program and using it does NOT return an identity transform.
+  - This is because the rotation of a Transformation Matrix is handled far differently than scale or translation.  
+- To get the rotation of an `AffineTransform`, one must use the method `AffineTransform#getRotateInstance()`.
+  What makes rotations different is the nature of `sin()` and `cos()`. 
+  Also, because rotations are in radians and use Math.PI, an irrational number, no double-precision floating point can be 100% precise.
+  This means it is impossible to get a rotation at an exact multiple of 90 degrees.
+  For this reason and others, `AffineTransform`s have special handling for rotations.
 
 ## Installation / Running Instructions
 
 This repository stands as an IntelliJ project with the IntelliJ build system.
 That said, many IntelliJ specific files/folders are excluded from the repository.
 With the `<project name>.iml` present, cloning the project will suffice. Once cloned, simply run the file
-`LLGraphic.java`.
+`LLGApp.java`.
 
 It is recommendable to clone the repository via IntelliJ's **<kbd>File</kbd> → <kbd>New</kbd> → <kbd>Project from
 Version Control...</kbd>** window,

@@ -10,7 +10,7 @@ public class LLGCanvas extends JPanel {
             (new Color(88, 68, 34)),    // "nut brown"
             (new Color(0, 0, 0, 0))     // transparent
     };
-    private static final int[][] PIXEL_COLORS = {
+    private static final int[][] PIXEL_COLOR_MAP = {
             // 11 columns, 16 rows
             {4, 4, 3, 3, 3, 3, 3, 3, 3, 4, 4},
             {4, 3, 0, 0, 0, 1, 0, 1, 1, 3, 4},
@@ -29,32 +29,77 @@ public class LLGCanvas extends JPanel {
             {4, 4, 3, 3, 4, 4, 3, 3, 3, 4, 4},
             {4, 4, 4, 4, 4, 4, 4, 3, 3, 4, 4}
     };
-    private static final int PIXEL_SIZE = 24;
+    private static final int PIXEL_SIZE = 8;
 
-    private final boolean draw_squares;
-
-    public LLGCanvas(boolean draw_squares) {
-        super();
-        this.draw_squares = draw_squares;
-    }
+    private boolean drawSquares;
 
     @Override
     public void paintComponent(Graphics g) {
         // Set 2D context
         Graphics2D g2 = (Graphics2D) g;
-        AffineTransform t = g2.getTransform();
+        AffineTransform reset = new AffineTransform(AffineTransform.getRotateInstance(AffineTransform.TYPE_IDENTITY));
 
+        // draw squares
+        drawSquares = true;
+        drawPixels(g2);
+
+        // translate, then draw circles
+        g2.translate(PIXEL_SIZE * (PIXEL_COLOR_MAP[0].length + 4), 0);
+        drawSquares = false;
+        drawPixels(g2);
+
+        // translate, flip upside down, then draw squares
+        g2.translate(PIXEL_SIZE * (PIXEL_COLOR_MAP[0].length * 2 + 4), PIXEL_SIZE * (PIXEL_COLOR_MAP.length));
+        g2.rotate(Math.PI);
+        drawSquares = true;
+        drawPixels(g2);
+
+        // translate while upside down, then draw circles
+        g2.translate(PIXEL_SIZE * (PIXEL_COLOR_MAP[0].length + 4) * -1, 0);
+        drawSquares = false;
+        drawPixels(g2);
+
+        // reset transform, scale 2x, translate, then draw squares
+        g2.setTransform(reset);
+        g2.scale(2, 2);
+        g2.translate(0, PIXEL_SIZE * PIXEL_COLOR_MAP.length);
+        // draw squares
+        drawSquares = true;
+        drawPixels(g2);
+
+        // translate, then draw circles
+        g2.translate(PIXEL_SIZE * (PIXEL_COLOR_MAP[0].length + 4), 0);
+        drawSquares = false;
+        drawPixels(g2);
+
+        // translate, rotate, scale down, then draw squares
+        g2.translate(PIXEL_SIZE * (PIXEL_COLOR_MAP[0].length + 4) * 1.5, 0);
+        g2.scale(0.33, 0.33);
+        g2.rotate(Math.PI / 2.75);
+        drawSquares = true;
+        drawPixels(g2);
+
+        // translate, then draw circles
+        g2.translate(PIXEL_SIZE * (PIXEL_COLOR_MAP[0].length + 4), 0);
+        drawSquares = false;
+        drawPixels(g2);
+
+        repaint();
+    }
+
+    private void drawPixels(Graphics2D g2) {
+        AffineTransform t = g2.getTransform();
         // row determines y-value
-        for (int y = 0; y < PIXEL_COLORS.length; y++) {
+        for (int y = 0; y < PIXEL_COLOR_MAP.length; y++) {
             g2.setTransform(t);
             g2.translate(0, y * PIXEL_SIZE);
 
             // column determines x-value
-            for (int x = 0; x < PIXEL_COLORS[y].length; x++) {
-                Color color = PALETTE[PIXEL_COLORS[y][x]];
+            for (int x = 0; x < PIXEL_COLOR_MAP[y].length; x++) {
+                Color color = PALETTE[PIXEL_COLOR_MAP[y][x]];
                 g2.setColor(color);
 
-                if (draw_squares)
+                if (drawSquares)
                     g2.fillRect(0, 0, PIXEL_SIZE, PIXEL_SIZE);
                 else
                     g2.fillOval(0, 0, PIXEL_SIZE, PIXEL_SIZE);
@@ -63,6 +108,6 @@ public class LLGCanvas extends JPanel {
             }
         }
 
-        repaint();
+        g2.setTransform(t);
     }
 }

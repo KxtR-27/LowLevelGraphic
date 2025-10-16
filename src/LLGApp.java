@@ -1,21 +1,21 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class LLGraphic extends JFrame {
+public class LLGApp extends JFrame {
     public static void main(String[] args) {
-        new LLGraphic();
+        new LLGApp();
     }
 
     // will draw circles if false
-    public LLGCanvas canvas = new LLGCanvas(true);
+    public LLGCanvas canvas = new LLGCanvas();
     //public LLGCanvas canvas = new LLGCanvas(false);
 
-    public LLGraphic() {
+    public LLGApp() {
         this.setLayout(new BorderLayout());
         this.add(canvas, BorderLayout.CENTER);
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setSize(480, 480);
+        this.setSize(640, 480);
         this.centerOnScreen();
         this.setVisible(true);
     }
