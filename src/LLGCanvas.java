@@ -8,7 +8,7 @@ public class LLGCanvas extends JPanel {
             (new Color(120, 164, 106)), // "asparagus"
             (new Color(94, 133, 73)),   // "fern green"
             (new Color(88, 68, 34)),    // "nut brown"
-            (Color.WHITE)
+            (new Color(0, 0, 0, 0))     // transparent
     };
     private static final int[][] PIXEL_COLORS = {
             // 11 columns, 16 rows
@@ -30,6 +30,7 @@ public class LLGCanvas extends JPanel {
             {4, 4, 4, 4, 4, 4, 4, 3, 3, 4, 4}
     };
     private static final int PIXEL_SIZE = 24;
+
 
     private final boolean draw_squares;
 
