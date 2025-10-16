@@ -8,7 +8,7 @@ public class LLGraphic extends JFrame {
 
     // will draw circles if false
     public LLGCanvas canvas = new LLGCanvas(true);
-//    public LLGCanvas canvas = new LLGCanvas(false);
+    //public LLGCanvas canvas = new LLGCanvas(false);
 
     public LLGraphic() {
         this.setLayout(new BorderLayout());

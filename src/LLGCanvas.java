@@ -31,7 +31,6 @@ public class LLGCanvas extends JPanel {
     };
     private static final int PIXEL_SIZE = 24;
 
-
     private final boolean draw_squares;
 
     public LLGCanvas(boolean draw_squares) {
@@ -42,7 +41,7 @@ public class LLGCanvas extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         // Set 2D context
-        Graphics2D g2 = (Graphics2D)g;
+        Graphics2D g2 = (Graphics2D) g;
         AffineTransform t = g2.getTransform();
 
         // row determines y-value
