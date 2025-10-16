@@ -1,14 +1,10 @@
 # Low-Level Graphic
 ###### Kat R. | CS 439: Game Engine Development
 
----
-
 > Exercise your skills at low-level graphics programming by producing some sort of image using only graphics primitives.
 > 
 > We have discussed a number of low-level graphics packages, including those in Python, JavaScript, and Java. You may use these or another language with an appropriate library to build some sort of image.
 ###### _<sup>from the "Low-level graphic" assignment page on [Canvas](https://bsu.instructure.com/courses/175355/assignments/2300662).</sup>_
-
----
 
 ## Project Overview
 This project uses the `Swing` and `AWT` libraries provided by Java.
@@ -54,7 +50,7 @@ It is recommendable to clone the repository via IntelliJ's **<kbd>File</kbd> →
 supplying the link to this repository in the corresponding field <kbd>URL:</kbd>.
 
 ## Third-Party Resources
-The "image"/"bitmap" supplied is adapted from a sprite frame in the image`elf.png` from 
+The "image"/"bitmap" supplied is adapted from a sprite frame in the image `elf.png` ![sprite frame](README_elf_frame.png) from 
 [the below itch.io asset pack](https://toadzillart.itch.io/dungeons-pack) 
 by [Toadzilla](https://toadzillart.itch.io/).
 I am currently using these assets in a project for CS 315, so it was quick and easy to access.
@@ -67,6 +63,12 @@ You may click the gif below to open the webpage.
 >
 >   ✔️ Use the assets for non-commercial & commercial projects!  
 >   ✔️ Adapt and/or modify the assets to match your project.  
->   ✔️ Credit me ("Toadzilla") with link to this pack 
+>   ✔️ Credit me ("Toadzilla") with link to this pack  
+>   
+> #### You can **NOT**:
+> 
+>   ❌Distribute or sell those assets directly (even modified).  
+>   ❌Claim the asset yours.  
+>   ❌Use the assets in an crypto / NFT / meta related project.
 
 [![Super Gameboy Quest: Dungeons](https://img.itch.zone/aW1nLzE1MzE3ODYxLmdpZg==/original/R9Cmel.gif)](https://toadzillart.itch.io/dungeons-pack)
