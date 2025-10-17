@@ -1,8 +1,10 @@
+package affine;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
-public class LLGCanvas extends JPanel {
+public class AffineCanvas extends JPanel {
     private static final Color[] PALETTE = {
             (new Color(212, 210, 155)), // "dark vanilla"
             (new Color(120, 164, 106)), // "asparagus"

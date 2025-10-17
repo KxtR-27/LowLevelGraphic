@@ -1,16 +1,16 @@
+package affine;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class LLGApp extends JFrame {
+public class AffineApp extends JFrame {
     public static void main(String[] args) {
-        new LLGApp();
+        new AffineApp();
     }
 
-    // will draw circles if false
-    public LLGCanvas canvas = new LLGCanvas();
-    //public LLGCanvas canvas = new LLGCanvas(false);
+    public AffineCanvas canvas = new AffineCanvas();
 
-    public LLGApp() {
+    public AffineApp() {
         this.setLayout(new BorderLayout());
         this.add(canvas, BorderLayout.CENTER);
 

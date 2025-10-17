@@ -22,6 +22,8 @@ Instead, it only transforms the drawing context.
 
 ## Technologies Description
 
+### "Affine App"
+
 The "color palette" is an array of Color objects.
 The "bitmap" is a 2D array of indexes corresponding to said palette.
 The process follows a certain flow:
@@ -40,6 +42,25 @@ The process follows a certain flow:
 8. This new location/position/rotation/scale **<ins>becomes the base transform</ins>**
    and is stored in the variable from step one.
 9. The process repeats itself until all "versions" of the "bitmap" are drawn.
+
+### "Motion App"
+
+This uses the spritesheet directly as a `BufferedImage` object.
+In short, the "sprite" "moves" across the window, 
+changing sprite frames after a specified number of paint calls (de facto, application framerate).
+Once it passes beyond the right edge of the window, it wraps around to the left.
+
+This process _also_ follows a certain flow.
+1. The canvas draws a white background (to "hide" previous "sprite" frames)
+2. Based upon the number of `paintCallsBeforeSwitchingFrames`,
+  the `timesPaintedThisFrame` will reset and increment the sprite frame index by one
+  when `timesPaintedThisFrame = timesPaintedThisFrame % paintCallsBeforeSwitchingFrames`
+  sets `timesPaintedThisFrame` to 0.
+3. The "sprite" "moves" by a factor of `dx`.
+  This affects the canvas's translation, not the actual x-position of the "sprite".
+4. After all of those calculations, 
+  the canvas draws the region of the spritesheet corresponding to the current frame.
+5. The process repeats itself indefinitely.
 
 ## Quick Analysis of what I Learned
 
@@ -65,7 +86,7 @@ However, I _can_ provide a running list of things I have learned _so far_.
 This repository stands as an IntelliJ project with the IntelliJ build system.
 That said, many IntelliJ specific files/folders are excluded from the repository.
 With the `<project name>.iml` present, cloning the project will suffice. Once cloned, simply run the file
-`LLGApp.java`.
+`affine.AffineApp.java` and/or `motion.MotionApp.java`.
 
 It is recommendable to clone the repository via IntelliJ's **<kbd>File</kbd> → <kbd>New</kbd> → <kbd>Project from
 Version Control...</kbd>** window,
@@ -73,10 +94,15 @@ supplying the link to this repository in the corresponding field <kbd>URL:</kbd>
 
 ## Third-Party Resources
 
-The "image"/"bitmap" supplied is adapted from a sprite frame in the image
-`elf.png` ![sprite frame](README_elf_frame.png) from
+The "image"/"bitmap" supplied to the **Affine App** is adapted from a sprite frame in the image
+`elf.png` ![sprite frame](src/affine/README_elf_frame.png) from
 [the below itch.io asset pack](https://toadzillart.itch.io/dungeons-pack)
 by [Toadzilla](https://toadzillart.itch.io/).
+
+The spritesheet used for the **Motion App**, 
+which is the origin of previously mentioned frame.
+![spritesheet](src/motion/elf_spritesheet.png)
+
 I am currently using these assets in a project for CS 315, so it was quick and easy to access.
 
 You may scroll down when on the asset pack page to find the **License** section.
