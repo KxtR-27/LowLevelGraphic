@@ -41,7 +41,7 @@ public class MotionCanvas extends JPanel {
         g2.fillRect(0, 0, windowSize.width, windowSize.height);
 
         // when to switch sprite frames
-        int paintCallsBeforeSwitchingFrames = 100;
+        int paintCallsBeforeSwitchingFrames = 120;
         timesPaintedThisFrame = ++timesPaintedThisFrame % paintCallsBeforeSwitchingFrames;
         if (timesPaintedThisFrame == 0) currentFrame = ++currentFrame % framePoints.length;
 
