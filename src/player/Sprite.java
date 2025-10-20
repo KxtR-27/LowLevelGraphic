@@ -35,7 +35,7 @@ public class Sprite extends Tickable {
 //        vFrames = 8; // The math says it's arbitrary, I guess...
 
         fps = 8.0;
-        
+
         currentFrameRange = walkFrameRange;
         currentFrame = currentFrameRange.x;
     }

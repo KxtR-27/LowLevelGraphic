@@ -22,6 +22,8 @@ Instead, it only transforms the drawing context.
 
 ## Technologies Description
 
+Entries are generally in commit order, so "Player App" appears twice.
+
 ### "Affine App"
 
 The "color palette" is an array of Color objects.
@@ -79,10 +81,18 @@ This process _also_ follows a certain flow.
    - The sprite knows the coordinate position of the current frame in the spritesheet image. 
         Using this position, the size of a frame, and the location passed down by the player, it draws itself to the canvas.
 
+### "Input App"
+1. The `InputCanvas` has a background color initially set as white.
+2. Keybinds for each key in the word <kbd>R</kbd><kbd>A</kbd><kbd>I</kbd><kbd>N</kbd><kbd>B</kbd><kbd>O</kbd><kbd>W</kbd> are added to the input map
+3. Actions for each input are added to the action map
+   - Each action changes the background color to a new color.
+4. When a bound key is pressed, the screen color changes.
+
 ## Quick Analysis of what I Learned
 
 As the project is not yet finished, I cannot yet provide this analysis.
 However, I _can_ provide a running list of things I have learned _so far_.
+Entries are generally in commit order.
 
 - Positioning the Swing window to open in the center of the user's desktop.
 - How and when to appropriately store, mutate, and restore `AffineTransform` to/from the canvas.
@@ -104,6 +114,13 @@ However, I _can_ provide a running list of things I have learned _so far_.
   - How to calculate the current frame based upon time passed, factoring in extra ticks between frames.
   - How to separate different animations into ranges of frame indices
   - How to use the dimensions of a spritesheet and the size of each frame to calculate the coordinate position of a frame in the spritesheet image.
+
+
+- How to implement keybindings using 
+  - `Component#getInputMap()`
+  - `Component#getActionMap()`
+  - `<Subclass> extends AbstractAction`
+  - `Action#` and `AbstractAction#actionPerformed(e)`
 
 ## Installation / Running Instructions
 
