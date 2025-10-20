@@ -1,6 +1,8 @@
 package player;
 
-public abstract class Tickable {
+import javax.swing.*;
+
+public abstract class Tickable extends JComponent {
     private double secondsAtLastTick;
 
     public Tickable() {

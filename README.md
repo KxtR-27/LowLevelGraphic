@@ -116,11 +116,22 @@ Entries are generally in commit order.
   - How to use the dimensions of a spritesheet and the size of each frame to calculate the coordinate position of a frame in the spritesheet image.
 
 
-- How to implement keybindings using 
-  - `Component#getInputMap()`
-  - `Component#getActionMap()`
-  - `<Subclass> extends AbstractAction`
-  - `Action#` and `AbstractAction#actionPerformed(e)`
+- How to implement keybindings using:
+  1. InputMaps, ActionMaps, and Actions
+  2. KeyListener
+  3. KeyEventDispatcher
+  - Each implementation has its own flaws. 
+    I settled on KeyEventDispatcher.
+    The two biggest limiters are:
+    1. KeyListeners require custom focusing code
+    2. All of them, by nature of key events,
+       only detect a single key pressed,
+       and detect them in a manner similar to a text editor when the user holds a key to type many <kbd>w</kbd>s.
+
+
+- How to move the player using these keybindings.
+  A massive hitch, however, is that the coordinate plane in a component **only accepts integers**.
+  I work around this by changing the graphics context to a much smaller scale.
 
 ## Installation / Running Instructions
 
