@@ -14,15 +14,9 @@
 This project uses the `Swing` and `AWT` libraries provided by Java.
 I have supplied the program with a color palette and a "bitmap" of sorts.
 
-The program draws this bitmap in several different forms.   
-First with squares, then with circles, then rotated, then scaled.
-
-This program uses no coordinates other than (0, 0).
-Instead, it only transforms the drawing context.
+Though five different applications are present, the `FractalApp` in the `fractal` package actually follows the rubric.
 
 ## Technologies Description
-
-Entries are generally in commit order, so "Player App" appears twice.
 
 ### "Affine App"
 The "color palette" is an array of Color objects.
@@ -91,6 +85,15 @@ This process _also_ follows a certain flow.
    - Each key changes the background color to a new color.
 4. When a bound key is pressed, the screen color changes.
 
+### "Fractal App"
+1. A triangle polygon is constructed.
+2. A scale and rotation are initialized.
+3. Each draw...
+   1. Center the triangle on the screen
+   2. Scale it and multiply scale by scale factor
+   3. Rotate it and increment rotation factor
+4. And repeat
+
 ## Quick Analysis of what I Learned
 
 As the project is not yet finished, I cannot yet provide this analysis.
@@ -117,6 +120,10 @@ However, I _can_ provide a running list of things I have learned _so far_.
 - ...use a `KeyEventDispatcher`. This can only detect typing, 
   but it "pre-listens" so that you don't have to hook it up to the parent `JFrame`.
 
+### Fractal App
+- How to increment `AffineTransform` variables and change color
+- How to wait a certain number of frames between draws
+
 ### _<ins>Player App</ins>_
 
 - How to move the player using these keybindings.
@@ -137,7 +144,7 @@ However, I _can_ provide a running list of things I have learned _so far_.
 This repository stands as an IntelliJ project with the IntelliJ build system.
 That said, many IntelliJ specific files/folders are excluded from the repository.
 With the `<project name>.iml` present, cloning the project will suffice. Once cloned, simply run the file
-`affine.AffineApp`, `motion.MotionApp` `input.InputApp.java`, or `player.PlayerApp`.
+`affine.AffineApp`, `motion.MotionApp` `input.InputApp.java`, `player.PlayerApp`, **_or more importantly, `fractal.FractalApp`_**.
 
 It is recommendable to clone the repository via IntelliJ's **<kbd>File</kbd> → <kbd>New</kbd> → <kbd>Project from
 Version Control...</kbd>** window,
