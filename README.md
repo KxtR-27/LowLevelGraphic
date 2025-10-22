@@ -96,9 +96,6 @@ This process _also_ follows a certain flow.
 
 ## Quick Analysis of what I Learned
 
-As the project is not yet finished, I cannot yet provide this analysis.
-However, I _can_ provide a running list of things I have learned _so far_.
-
 ### Affine App
 - Positioning the Swing window to open in the center of the user's desktop.
 - How and when to appropriately store, mutate, and restore `AffineTransform` to/from the canvas.
