@@ -25,7 +25,6 @@ Instead, it only transforms the drawing context.
 Entries are generally in commit order, so "Player App" appears twice.
 
 ### "Affine App"
-
 The "color palette" is an array of Color objects.
 The "bitmap" is a 2D array of indexes corresponding to said palette.
 The process follows a certain flow:
@@ -45,8 +44,8 @@ The process follows a certain flow:
    and is stored in the variable from step one.
 9. The process repeats itself until all "versions" of the "bitmap" are drawn.
 
-### "Motion App"
 
+### "Motion App"
 This uses the spritesheet directly as a `BufferedImage` object.
 In short, the "sprite" "moves" across the window, 
 changing sprite frames after a specified number of paint calls (de facto, application framerate).
@@ -64,13 +63,15 @@ This process _also_ follows a certain flow.
   the canvas draws the region of the spritesheet corresponding to the current frame.
 5. The process repeats itself indefinitely.
 
+
 ### "Player App"
-1. The canvas draws a white background.
-2. The canvas has a `Player`. It `tick()`s and `draw()`s the player in that order.
-3. The player holds a `Sprite`. The `Player` `tick()`s the `Sprite` when canvas ticks the player.
-4. The player holds a location (x, y).
-5. When the player is drawn, the player passes the `draw()` call, location, and graphics context to the Sprite.
-6. The Sprite, in turn, actually draws itself based on its current animation frame.
+1. Because the canvas's coordinate plane does not allow integers, the plane is scaled 0.05 times. This makes the canvas 20 times bigger.
+2. The canvas draws a white background.
+3. The canvas has a `Player`. It `tick()`s and `draw()`s the player in that order.
+4. The player holds a `Sprite`. The `Player` `tick()`s the `Sprite` when canvas ticks the player.
+5. The player holds a location (x, y).
+6. When the player is drawn, the player passes the `draw()` call, location, and graphics context to the Sprite.
+7. The Sprite, in turn, actually draws itself based on its current animation frame.
    - When the Sprite `tick()`s (ergo `onTick()`), its parent `Tickable` class calculates time in milliseconds that has passed since the last time it was ticked.
    - The Sprite has a spritesheet organized into frames. The Sprite has chosen a current frame.
    - Based on a set FPS, the Sprite increments its current frame index by `deltaTime / (1 / fps)`
@@ -80,65 +81,63 @@ This process _also_ follows a certain flow.
          Otherwise, the sprite may be stuck on the same frame forever.
    - The sprite knows the coordinate position of the current frame in the spritesheet image. 
         Using this position, the size of a frame, and the location passed down by the player, it draws itself to the canvas.
+8. Pressing/releasing WASD at any time changes the player's "velocity," which updates their location each `tick()`.
+
 
 ### "Input App"
 1. The `InputCanvas` has a background color initially set as white.
-2. Keybinds for each key in the word <kbd>R</kbd><kbd>A</kbd><kbd>I</kbd><kbd>N</kbd><kbd>B</kbd><kbd>O</kbd><kbd>W</kbd> are added to the input map
-3. Actions for each input are added to the action map
-   - Each action changes the background color to a new color.
+2. Keybinds for each key in the word <kbd>R</kbd><kbd>A</kbd><kbd>I</kbd><kbd>N</kbd><kbd>B</kbd><kbd>O</kbd><kbd>W</kbd> are added to the canvas via the KeyListener interface.
+3. Actions for each input are in a switch case according to the key pressed
+   - Each key changes the background color to a new color.
 4. When a bound key is pressed, the screen color changes.
 
 ## Quick Analysis of what I Learned
 
 As the project is not yet finished, I cannot yet provide this analysis.
 However, I _can_ provide a running list of things I have learned _so far_.
-Entries are generally in commit order.
 
+### Affine App
 - Positioning the Swing window to open in the center of the user's desktop.
 - How and when to appropriately store, mutate, and restore `AffineTransform` to/from the canvas.
 - How to precisely translate the canvas while iterating over the "bitmap".
 - How and when to rotate the canvas (in radians), and how said rotation affects translations done before and after.
-- How and when to scale the canvas, and how said scale affects translations done before and after.
-- How to make an identity `AffineTransform` to hard-reset the canvas's transform.
-  - Calling `g2.getTransform` at the very start of the program and using it does NOT return an identity transform.
-  - This is because the rotation of a Transformation Matrix is handled far differently than scale or translation.  
-  - To get the rotation of an `AffineTransform`, one must use the method `AffineTransform#getRotateInstance()`.
-    What makes rotations different is the nature of `sin()` and `cos()`. 
-    Also, because rotations are in radians and use Math.PI, an irrational number, no double-precision floating point can be 100% precise.
-    This means it is impossible to get a rotation at an exact multiple of 90 degrees.
-    For this reason and others, `AffineTransform`s have special handling for rotations.
+
+### Motion App
+- How to buffer an image into the canvas, with error handling.
+- How to use frames from a spritesheet image to create framerate-dependent animations
+- How to detect the edges of the window
+
+### Input App
+- How to implement keybindings using:
+  1. InputMaps, ActionMaps, and Actions
+  2. KeyListener/KeyAdapter
+  3. KeyEventDispatcher
+- From my tinkering, I've found that KeyListener/KeyAdapter is the most powerful (detects typing, presses, and releases).  
+  The catch is that the listener needs to be added to your `JFrame`. If you can't do this...
+- ...use a `KeyEventDispatcher`. This can only detect typing, 
+  but it "pre-listens" so that you don't have to hook it up to the parent `JFrame`.
+
+### _<ins>Player App</ins>_
+
+- How to move the player using these keybindings.
+  - How to debounce key presses to keep them from applying repeatedly. This allows for smooth motion.  
+  <sup><i>A massive hitch, however, is that the coordinate plane in a component **only accepts integers**.
+  I work around this by changing the graphics context to a much smaller scale.</i></sup>
 
 
 - How to implement a framerate-independent update system. (See `Tickable` abstract class)
-- How to animate a spritesheet image by looping through frames.
-  - How to calculate the current frame based upon time passed, factoring in extra ticks between frames.
+    - How to calculate the current frame based upon time passed, factoring in extra ticks between frames.
+
+- How to rig a basic animation state machine using frame ranges
   - How to separate different animations into ranges of frame indices
   - How to use the dimensions of a spritesheet and the size of each frame to calculate the coordinate position of a frame in the spritesheet image.
-
-
-- How to implement keybindings using:
-  1. InputMaps, ActionMaps, and Actions
-  2. KeyListener
-  3. KeyEventDispatcher
-  - Each implementation has its own flaws. 
-    I settled on KeyEventDispatcher.
-    The two biggest limiters are:
-    1. KeyListeners require custom focusing code
-    2. All of them, by nature of key events,
-       only detect a single key pressed,
-       and detect them in a manner similar to a text editor when the user holds a key to type many <kbd>w</kbd>s.
-
-
-- How to move the player using these keybindings.
-  A massive hitch, however, is that the coordinate plane in a component **only accepts integers**.
-  I work around this by changing the graphics context to a much smaller scale.
 
 ## Installation / Running Instructions
 
 This repository stands as an IntelliJ project with the IntelliJ build system.
 That said, many IntelliJ specific files/folders are excluded from the repository.
 With the `<project name>.iml` present, cloning the project will suffice. Once cloned, simply run the file
-`affine.AffineApp.java` and/or `motion.MotionApp.java`.
+`affine.AffineApp`, `motion.MotionApp` `input.InputApp.java`, or `player.PlayerApp`.
 
 It is recommendable to clone the repository via IntelliJ's **<kbd>File</kbd> → <kbd>New</kbd> → <kbd>Project from
 Version Control...</kbd>** window,
