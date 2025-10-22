@@ -6,6 +6,7 @@ public abstract class Tickable extends JComponent {
     private double secondsAtLastTick;
 
     public Tickable() {
+        super();
         secondsAtLastTick = System.currentTimeMillis() / 1000.0;
     }
 

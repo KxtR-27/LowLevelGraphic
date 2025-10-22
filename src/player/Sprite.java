@@ -15,14 +15,9 @@ public class Sprite extends Tickable {
     private final double fps;
     private double secondsAccumulatedBeforeNextFrame;
 
-    // Later on will be changeable (ex. changing from idle to walk)
-    @SuppressWarnings("FieldMayBeFinal")
     private Point currentFrameRange;
-    // Can only use one range for above reason
-    @SuppressWarnings("unused")
+
     private final Point idleFrameRange = new Point(0, 3);
-    // Not the only option for above reason
-    @SuppressWarnings("FieldCanBeLocal")
     private final Point walkFrameRange = new Point(14, 18);
 
     private int currentFrame;
@@ -36,7 +31,7 @@ public class Sprite extends Tickable {
 
         fps = 8.0;
 
-        currentFrameRange = walkFrameRange;
+        currentFrameRange = idleFrameRange;
         currentFrame = currentFrameRange.x;
     }
 
@@ -77,6 +72,16 @@ public class Sprite extends Tickable {
 
                 null
         );
+    }
+
+
+    public void changeAnimationIfNeeded(Point delta) {
+        boolean moving = delta.x != 0 || delta.y != 0;
+
+        if (!moving && currentFrameRange != idleFrameRange)
+            currentFrameRange = idleFrameRange;
+        else if (moving && currentFrameRange != walkFrameRange)
+                currentFrameRange = walkFrameRange;
     }
 
 
